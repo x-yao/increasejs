@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no, shrink-to-fit=no" />
+	<title>Document</title>
+    <style>
+        .btn{
+            width: 100px;
+            height: 100px;
+            background: #CCC;
+            margin-bottom: 10px;
+        }
+        .display{
+            font-size: 40px;
+            height: 100px;
+            line-height: 100px;
+            vertical-align: bottom;
+        }
+        body>div>div{
+            display: inline-block;
+        }
+        .display4,.display5{
+            width: 100px;
+            height: 100px;
+            background: #F00;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <div class="btn1 btn">默认方式</div>
+        <div class="display1 display"></div>
+    </div>
+    <div>
+        <div class="btn2 btn">从20开头增长到100</div>
+        <div class="display2 display"></div>
+    </div>
+    <div>
+        <div class="btn3 btn">慢速0-20中速20-50快速50-100</div>
+        <div class="display3 display"></div>
+    </div>
+    <div>
+        <div class="btn4 btn">按住执行动画(松开再按住重来)</div>
+        <div class="display4 display"></div>
+    </div>
+    <div>
+        <div class="btn5 btn">按住执行动画（松开按住继续）</div>
+        <div class="display5 display"></div>
+    </div>
+</body>
+<script src="http://assets.daily.kuaidadi.com/??kui/lib/1.0.1/zepto.js"></script>
+<script src="../src/increase.js"></script>
+<script>
+    var increase1 = new Increase({
+            el:'.btn1',
+            dpEl:'.display1',
+            speed:30
+        });
+    var increase2 = new Increase({
+            dpEl:'.display2',
+            speed:30
+        });
+    var increase3 = new Increase({
+            dpEl:'.display3',
+            speed:10
+        });
+    var drow = function(m){
+        $('.display4').css('transform','translateX('+m+'px)');
+    }
+    var drow2 = function(m){
+        $('.display5').css('transform','translateX('+m*5+'px)');
+    }
+    var increase4 = new Increase({
+            el:'.btn4',
+            speed:30,
+            drow:drow
+        });
+    var increase5 = new Increase({
+            el:'.btn5',
+            richMax:60,
+            speed:60,
+            drow:drow2,
+            continue:true,
+            reset:true
+        });
+    $('.btn2').on('click',function(){
+        if (increase2.flag==false) {
+            increase2.enrich(20,100,30);
+        };
+    });
+    $('.btn3').on('click',function(){
+        increase3.enrich(0,20,10,function(){
+            increase3.enrich(20,50,30,function(){
+                increase3.enrich(50,100,60);
+            });
+        });
+    });
+    
+</script>
+</html>
